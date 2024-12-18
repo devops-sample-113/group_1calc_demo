@@ -1,10 +1,12 @@
 class Calculator:
+    import math
     def __init__(self):
         self.operations = {
             "add": self.add,
             "sub": self.subtract,
             "mul": self.multiply,
             "div": self.divide,
+            "pow": self.power,
         }
 
     def calculate(self, operand1, operand2, operator):
@@ -35,7 +37,8 @@ class Calculator:
             raise ValueError("Error: Can not divide by zero!")
 
         return x / y
-
+    def power(self, x, y):
+        return x ** y
 
 
 if __name__ == "__main__":

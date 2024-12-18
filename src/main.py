@@ -3,6 +3,8 @@ import random
 import time
 from calculate import Calculator
 from buttons import DigitButton, OperatorButton, ActionButton, RandomButton
+import math
+
 
 class CalculatorApp(ft.Container):
     # application's root control (i.e. "view") containing all other controls
@@ -27,6 +29,39 @@ class CalculatorApp(ft.Container):
                     expand=True,
                     controls=[self.result],
                     alignment="end"),
+
+                ft.Row(
+                    expand=True,
+                    controls=[
+
+                        ActionButton(
+                            text="Log",
+                            button_clicked=self.button_clicked,
+                            action="log10",
+                        ),
+                        ActionButton(
+                            text="|x|",
+                            button_clicked=self.button_clicked,
+                            action="||",
+                        ),
+                    ]
+                ),
+
+                ft.Row(
+                    expand=True,
+                    controls=[
+                        OperatorButton(
+                            text="^",
+                            button_clicked=self.button_clicked,
+                            operations="pow",
+                        ),
+                        ActionButton(
+                            text="√",
+                            button_clicked=self.button_clicked,
+                            action="sqrt",
+                        ),
+                    ]
+                ),
                 ft.Row(
                     expand=True,
                     controls=[
@@ -112,6 +147,15 @@ class CalculatorApp(ft.Container):
                             text="=", button_clicked=self.button_clicked, action="calculate"),
                     ]
                 ),
+                ft.Row(
+                    expand=True,
+                    controls=[
+                        ActionButton(
+                            text="sin", button_clicked=self.button_clicked, action="sin"),
+                        ActionButton(
+                            text="cos", button_clicked=self.button_clicked, action="cos"),
+                    ]
+                ),
             ]
         )
         return ui
@@ -175,7 +219,18 @@ class CalculatorApp(ft.Container):
                     float(self.result.value) / 100
                 )
             )
-            self.reset()
+        elif action == "log10":
+            self.result.value = str(
+                self.format_number(
+                    math.log10(float(self.result.value))
+                )
+            )
+        elif action == "||":
+            self.result.value = str(
+                self.format_number(
+                    math.fabs(float(self.result.value))
+                )
+            )
         elif action == "calculate":
             self.result.value = self.format_number(
                 self.calculate(
@@ -184,10 +239,22 @@ class CalculatorApp(ft.Container):
             )
             self.reset()
         elif action == "backspace":
-            if len(self.result.value) > 1:
-                self.result.value = self.result.value[:-1]
-            else:
+            self.result.value = self.result.value[:-1]
+            if self.result.value == "":
                 self.result.value = "0"
+        elif action == "sqrt":
+            self.result.value = str(
+                self.format_number(
+                    math.sqrt(float(self.result.value))
+                )
+            )
+        elif action in ["sin", "cos"]:
+            self.result.value = str(
+                self.format_number(
+                    getattr(math, action)(float(self.result.value))
+                )
+            )
+            self.reset()        
         else:
             raise ValueError("Invalid action")
 

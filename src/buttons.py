@@ -52,3 +52,4 @@ class RandomButton(CalcButton):
         self.bgcolor = ft.Colors.BLUE_GREY_500
         self.color = ft.Colors.BLACK
         self.value = value
+
