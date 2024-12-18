@@ -1,4 +1,6 @@
 import flet as ft
+import math
+import cmath
 from calculate import Calculator
 from buttons import DigitButton, OperatorButton, ActionButton
 import math
@@ -26,6 +28,24 @@ class CalculatorApp(ft.Container):
                     expand=True,
                     controls=[self.result],
                     alignment="end"),
+
+                ft.Row(
+                    expand=True,
+                    controls=[
+
+                        ActionButton(
+                            text="Log",
+                            button_clicked=self.button_clicked,
+                            action="log10",
+                        ),
+                        ActionButton(
+                            text="|x|",
+                            button_clicked=self.button_clicked,
+                            action="||",
+                        ),
+                    ]
+                ),
+
                 ft.Row(
                     expand=True,
                     controls=[
@@ -121,6 +141,15 @@ class CalculatorApp(ft.Container):
                             text="=", button_clicked=self.button_clicked, action="calculate"),
                     ]
                 ),
+                ft.Row(
+                    expand=True,
+                    controls=[
+                        ActionButton(
+                            text="sin", button_clicked=self.button_clicked, action="sin"),
+                        ActionButton(
+                            text="cos", button_clicked=self.button_clicked, action="cos"),
+                    ]
+                ),
             ]
         )
         return ui
@@ -179,7 +208,18 @@ class CalculatorApp(ft.Container):
                     float(self.result.value) / 100
                 )
             )
-            self.reset()
+        elif action == "log10":
+            self.result.value = str(
+                self.format_number(
+                    math.log10(float(self.result.value))
+                )
+            )
+        elif action == "||":
+            self.result.value = str(
+                self.format_number(
+                    math.fabs(float(self.result.value))
+                )
+            )
         elif action == "calculate":
             self.result.value = self.format_number(
                 self.calculate(
@@ -197,6 +237,13 @@ class CalculatorApp(ft.Container):
                     math.sqrt(float(self.result.value))
                 )
             )
+        elif action in ["sin", "cos"]:
+            self.result.value = str(
+                self.format_number(
+                    getattr(math, action)(float(self.result.value))
+                )
+            )
+            self.reset()        
         else:
             raise ValueError("Invalid action")
 

@@ -1,4 +1,5 @@
 class Calculator:
+    import math
     def __init__(self):
         self.operations = {
             "add": self.add,
@@ -38,7 +39,6 @@ class Calculator:
         return x / y
     def power(self, x, y):
         return x ** y
-
 
 
 if __name__ == "__main__":

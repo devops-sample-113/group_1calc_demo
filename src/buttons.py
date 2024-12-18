@@ -44,3 +44,4 @@ class ActionButton(CalcButton):
         self.bgcolor = ft.Colors.BLUE_GREY_200
         self.color = ft.Colors.BLACK
         self.action = action
+        
