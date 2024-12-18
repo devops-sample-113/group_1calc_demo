@@ -1,9 +1,10 @@
 import flet as ft
-import math
-import cmath
+import random
+import time
 from calculate import Calculator
-from buttons import DigitButton, OperatorButton, ActionButton
+from buttons import DigitButton, OperatorButton, ActionButton, RandomButton
 import math
+
 
 class CalculatorApp(ft.Container):
     # application's root control (i.e. "view") containing all other controls
@@ -64,7 +65,6 @@ class CalculatorApp(ft.Container):
                 ft.Row(
                     expand=True,
                     controls=[
-
                         ActionButton(
                             text="AC",
                             button_clicked=self.button_clicked,
@@ -117,6 +117,9 @@ class CalculatorApp(ft.Container):
                 ft.Row(
                     expand=True,
                     controls=[
+                        RandomButton(
+                            text="rand", button_clicked=self.button_clicked, value="rand"
+                        ),
                         DigitButton(
                             text="1", button_clicked=self.button_clicked, value=1),
                         DigitButton(
@@ -130,6 +133,9 @@ class CalculatorApp(ft.Container):
                 ft.Row(
                     expand=True,
                     controls=[
+                        DigitButton(
+                            text="π", button_clicked=self.button_clicked, value=3.141592653589793
+                        ),
                         DigitButton(
                             text="0", expand=1, button_clicked=self.button_clicked, value=0
                         ),
@@ -162,13 +168,18 @@ class CalculatorApp(ft.Container):
             self.operator_button_clicked(e)
         elif types == "action":
             self.action_button_clicked(e)
+        elif types == "rand":
+            self.rand_button_clicked(e)
         else:
             raise ValueError("Invalid button type")
         self.update()
 
     def digit_button_clicked(self, e):
         value = e.control.value
-        if self.result.value == "0" or self.new_operand == True:
+        if value == 3.141592653589793:
+            self.result.value = str(value)
+            self.new_operand = False
+        elif self.result.value == "0" or self.new_operand == True or self.result.value == str(value):
             self.result.value = str(value)
             self.new_operand = False
         else:
@@ -247,11 +258,10 @@ class CalculatorApp(ft.Container):
         else:
             raise ValueError("Invalid action")
 
-    def format_number(self, num):
-        if num % 1 == 0:
-            return int(num)
-        else:
-            return num
+    def rand_button_clicked(self, e):
+        random.seed(time.time())  # 使用當前時間作為種子
+        random_value = random.uniform(0, 1)
+        self.result.value = str(random_value)
 
     def format_number(self, num):
         try:
