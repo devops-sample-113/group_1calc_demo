@@ -2,7 +2,7 @@ import flet as ft
 from calculate import Calculator
 from buttons import DigitButton, OperatorButton, ActionButton
 
-
+import math
 class CalculatorApp(ft.Container):
     # application's root control (i.e. "view") containing all other controls
     def __init__(self):
@@ -106,6 +106,15 @@ class CalculatorApp(ft.Container):
                             text="=", button_clicked=self.button_clicked, action="calculate"),
                     ]
                 ),
+                ft.Row(
+                    expand=True,
+                    controls=[
+                        ActionButton(
+                            text="sin", button_clicked=self.button_clicked, action="sin"),
+                        ActionButton(
+                            text="cos", button_clicked=self.button_clicked, action="cos"),
+                    ]
+                ),
             ]
         )
         return ui
@@ -176,6 +185,15 @@ class CalculatorApp(ft.Container):
             self.result.value = self.result.value[:-1]
             if self.result.value == "":
                 self.result.value = "0"    
+        elif action in ["sin", "cos"]:
+            self.result.value = str(
+                self.format_number(
+                    getattr(math, action)(float(self.result.value))
+                )
+            )
+                               
+
+            self.reset()        
         else:
             raise ValueError("Invalid action")
 
