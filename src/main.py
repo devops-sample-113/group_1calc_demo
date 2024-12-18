@@ -1,7 +1,7 @@
 import flet as ft
 from calculate import Calculator
 from buttons import DigitButton, OperatorButton, ActionButton
-
+import math
 
 class CalculatorApp(ft.Container):
     # application's root control (i.e. "view") containing all other controls
@@ -34,10 +34,10 @@ class CalculatorApp(ft.Container):
                             button_clicked=self.button_clicked,
                             operations="pow",
                         ),
-                        OperatorButton(
+                        ActionButton(
                             text="√",
                             button_clicked=self.button_clicked,
-                            operations="sqrt",
+                            action="sqrt",
                         ),
                     ]
                 ),
@@ -191,6 +191,12 @@ class CalculatorApp(ft.Container):
             self.result.value = self.result.value[:-1]
             if self.result.value == "":
                 self.result.value = "0"
+        elif action == "sqrt":
+            self.result.value = str(
+                self.format_number(
+                    math.sqrt(float(self.result.value))
+                )
+            )
         else:
             raise ValueError("Invalid action")
 

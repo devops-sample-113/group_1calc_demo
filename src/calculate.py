@@ -1,4 +1,3 @@
-import math
 class Calculator:
     def __init__(self):
         self.operations = {
@@ -7,7 +6,6 @@ class Calculator:
             "mul": self.multiply,
             "div": self.divide,
             "pow": self.power,
-            "sqrt": self.sqrt,
         }
 
     def calculate(self, operand1, operand2, operator):
@@ -40,9 +38,6 @@ class Calculator:
         return x / y
     def power(self, x, y):
         return x ** y
-    
-    def sqrt(self, x, y):
-        return math.sqrt(x)
 
 
 
