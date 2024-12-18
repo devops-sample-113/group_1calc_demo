@@ -3,8 +3,8 @@ import math
 import cmath
 from calculate import Calculator
 from buttons import DigitButton, OperatorButton, ActionButton
-
 import math
+
 class CalculatorApp(ft.Container):
     # application's root control (i.e. "view") containing all other controls
     def __init__(self):
@@ -46,6 +46,21 @@ class CalculatorApp(ft.Container):
                     ]
                 ),
 
+                ft.Row(
+                    expand=True,
+                    controls=[
+                        OperatorButton(
+                            text="^",
+                            button_clicked=self.button_clicked,
+                            operations="pow",
+                        ),
+                        ActionButton(
+                            text="√",
+                            button_clicked=self.button_clicked,
+                            action="sqrt",
+                        ),
+                    ]
+                ),
                 ft.Row(
                     expand=True,
                     controls=[
@@ -215,15 +230,19 @@ class CalculatorApp(ft.Container):
         elif action == "backspace":
             self.result.value = self.result.value[:-1]
             if self.result.value == "":
-                self.result.value = "0"    
+                self.result.value = "0"
+        elif action == "sqrt":
+            self.result.value = str(
+                self.format_number(
+                    math.sqrt(float(self.result.value))
+                )
+            )
         elif action in ["sin", "cos"]:
             self.result.value = str(
                 self.format_number(
                     getattr(math, action)(float(self.result.value))
                 )
             )
-                               
-
             self.reset()        
         else:
             raise ValueError("Invalid action")
