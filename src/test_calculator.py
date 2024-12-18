@@ -22,6 +22,10 @@ class TestCalculator(unittest.TestCase):
         result = self.calculator.calculate(10, 5, "div")
         self.assertEqual(result, 2)
 
+    def test_power(self):
+        result = self.calculator.calculate(5, 2, "pow")
+        self.assertEqual(result, 25)
+
     def test_division_by_zero(self):
         result = self.calculator.calculate(10, 0, "div")
         self.assertEqual(result, "Error: Can not divide by zero!")
