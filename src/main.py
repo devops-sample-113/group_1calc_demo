@@ -29,6 +29,21 @@ class CalculatorApp(ft.Container):
                 ft.Row(
                     expand=True,
                     controls=[
+                        OperatorButton(
+                            text="^",
+                            button_clicked=self.button_clicked,
+                            operations="pow",
+                        ),
+                        OperatorButton(
+                            text="√",
+                            button_clicked=self.button_clicked,
+                            operations="sqrt",
+                        ),
+                    ]
+                ),
+                ft.Row(
+                    expand=True,
+                    controls=[
 
                         ActionButton(
                             text="AC",
