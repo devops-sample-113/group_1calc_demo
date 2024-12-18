@@ -172,6 +172,11 @@ class CalculatorApp(ft.Container):
                 )
             )
             self.reset()
+        elif action == "backspace":
+            if len(self.result.value) > 1:
+                self.result.value = self.result.value[:-1]
+            else:
+                self.result.value = "0"
         else:
             raise ValueError("Invalid action")
 
