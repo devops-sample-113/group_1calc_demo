@@ -15,7 +15,7 @@ class CalcButton(ft.ElevatedButton):
     @type.setter
     def type(self, value):
         assert value in ["digit", "operator",
-                         "action"], "Invalid type: must be 'digit', 'operator', or 'action'."
+                         "action","rand"], "Invalid type: must be 'rand', 'digit', 'operator', or 'action'."
         self._type = value
 
 
@@ -44,3 +44,11 @@ class ActionButton(CalcButton):
         self.bgcolor = ft.Colors.BLUE_GREY_200
         self.color = ft.Colors.BLACK
         self.action = action
+
+class RandomButton(CalcButton):
+    def __init__(self, text, button_clicked, value=0, expand=True):
+        super().__init__(text, button_clicked, expand)
+        self.type = "rand"
+        self.bgcolor = ft.Colors.BLUE_GREY_500
+        self.color = ft.Colors.BLACK
+        self.value = value
